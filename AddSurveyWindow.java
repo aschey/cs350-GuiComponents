@@ -23,6 +23,7 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
     private JButton submit;
     private JTextField zipCodeText;
     private Font textFont;
+    private Font titleFont;
 
     private JCheckBox[] socialMedia = {new JCheckBox("Facebook"), new JCheckBox("Twitter"),
             new JCheckBox("LinkedIn"), new JCheckBox("Pinterest"), new JCheckBox("Others")};
@@ -37,14 +38,17 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
     private Container contentPane;
     private JPanel socialMediaPanel;
     private JPanel agePanel;
+    private JPanel recordNoPanel;
     private CSample dataEntered;
 
     public AddSurveyWindow(JFrame owner, int recordNo) {
         super(owner, "Add a Survey", true);
         this.setSize(800, 400);
         this.recordNo = recordNo;
+        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.submitPressed = false;
         this.textFont = new Font("Perpetua", Font.PLAIN, 15);
+        this.titleFont = new Font("Perpetua", Font.BOLD, 15);
 
         this.contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -56,8 +60,6 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
         this.createTimePanel();
         this.createButtonPanel();
     }
-
-    //public AddSurveyWindow(JFrame owner)
 
     private void createZipCodePanel() {
         JPanel zipCodePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
@@ -81,7 +83,7 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
         JButton cancel = new JButton("Cancel");
         this.createButton(cancel, buttonPanel);
 
-        contentPane.add(buttonPanel);
+        this.contentPane.add(buttonPanel);
     }
 
     private void createTimePanel() {
@@ -124,16 +126,15 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
         for (JRadioButton ageButton : this.ages) {
             this.createRadioButton(ageButton, this.agePanel, ageButtonGroup);
         }
-        contentPane.add(agePanel);
+        this.contentPane.add(agePanel);
     }
 
     private void createRecordNoPanel() {
-        JPanel recordNoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        this.createTitle(new JLabel("Record No."), recordNoPanel);
-        this.createTitle(new JLabel(String.format("%08d", this.recordNo)), recordNoPanel);
-        contentPane.add(recordNoPanel);
+        this.recordNoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        this.createTitle(new JLabel("Record No."), this.recordNoPanel);
+        this.createTitle(new JLabel(String.format("%08d", this.recordNo)), this.recordNoPanel, Color.RED);
+        this.contentPane.add(this.recordNoPanel, 0);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -142,6 +143,7 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
                     this.ages, this.times);
             this.submitPressed = true;
         }
+
         this.setVisible(false);
     }
 
@@ -163,10 +165,27 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
     }
 
     private void createTitle(JLabel label, JPanel panel) {
-        label.setFont(this.textFont);
+        label.setFont(this.titleFont);
+        label.setForeground(Color.blue);
         panel.add(label);
     }
 
+    private void createTitle(JLabel label, JPanel panel, Color color) {
+        label.setFont(this.titleFont);
+        label.setForeground(color);
+        panel.add(label);
+    }
+
+    private void reDrawRecordNoPanel() {
+        this.contentPane.remove(this.recordNoPanel);
+        this.createRecordNoPanel();
+        this.dataEntered.setRecordNo(this.recordNo);
+    }
+
+    public void setRecordNo(int recordNo) {
+        this.recordNo = recordNo;
+        this.reDrawRecordNoPanel();
+    }
     public String getDataEntered() {
         return this.dataEntered.toString();
     }

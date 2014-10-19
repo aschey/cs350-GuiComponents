@@ -73,7 +73,11 @@ public class CSample {
 
     @Override
     public String toString() {
-        return String.format(" %-11s %-10s %s %12s %8s", this.recordNo, this.zipCode,
+        return String.format("  %-13s %-11s %s %13s %9s", this.recordNo, this.zipCode,
                 this.socialMedia, this.ageGroup, this.avgTime);
+    }
+
+    public void setRecordNo(int recordNo) {
+        this.recordNo = String.format("%08d", recordNo);
     }
 }
