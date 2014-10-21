@@ -36,16 +36,14 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
             new JRadioButton("longer than 2 hours (X)")};
 
     private Container contentPane;
-    private JPanel socialMediaPanel;
-    private JPanel agePanel;
     private JPanel recordNoPanel;
     private CSample dataEntered;
 
     public AddSurveyWindow(JFrame owner, int recordNo) {
         super(owner, "Add a Survey", true);
         this.setSize(800, 400);
+        this.setLocation(300, 200);
         this.recordNo = recordNo;
-        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.submitPressed = false;
         this.textFont = new Font("Perpetua", Font.PLAIN, 15);
         this.titleFont = new Font("Perpetua", Font.BOLD, 15);
@@ -89,7 +87,7 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
     private void createTimePanel() {
         JPanel timeTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         this.createTitle(new JLabel("How much time do you spend on social media on an average day?"), timeTitlePanel);
-        contentPane.add(timeTitlePanel);
+        this.contentPane.add(timeTitlePanel);
         ButtonGroup timeGroup = new ButtonGroup();
 
         JPanel timePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
@@ -97,34 +95,34 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
         for (JRadioButton timeButton : this.times) {
             this.createRadioButton(timeButton, timePanel, timeGroup);
         }
-        contentPane.add(timePanel);
+        this.contentPane.add(timePanel);
     }
 
     private void createSocialMediaPanel() {
         JPanel mediaTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         this.createTitle(new JLabel("What social media do you use?"), mediaTitlePanel);
-        contentPane.add(mediaTitlePanel);
+        this.contentPane.add(mediaTitlePanel);
 
-        this.socialMediaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        this.socialMediaPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        JPanel socialMediaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        socialMediaPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
         for (JCheckBox mediaCheckBox : this.socialMedia) {
-            this.createCheckBox(mediaCheckBox, this.socialMediaPanel);
+            this.createCheckBox(mediaCheckBox, socialMediaPanel);
         }
-        this.contentPane.add(this.socialMediaPanel);
+        this.contentPane.add(socialMediaPanel);
     }
 
     private void createAgePanel() {
         ButtonGroup ageButtonGroup = new ButtonGroup();
         JPanel ageTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         this.createTitle(new JLabel("What is your age?"), ageTitlePanel);
-        contentPane.add(ageTitlePanel);
+        this.contentPane.add(ageTitlePanel);
 
-        this.agePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        this.agePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        JPanel agePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        agePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
         for (JRadioButton ageButton : this.ages) {
-            this.createRadioButton(ageButton, this.agePanel, ageButtonGroup);
+            this.createRadioButton(ageButton, agePanel, ageButtonGroup);
         }
         this.contentPane.add(agePanel);
     }

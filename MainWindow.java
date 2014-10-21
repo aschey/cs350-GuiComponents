@@ -19,7 +19,6 @@ public class MainWindow extends JFrame implements ActionListener {
     private JButton addButton;
     private JButton modifyButton;
     private JButton deleteButton;
-    private JButton deleteAllButton;
     private JScrollPane surveyViewer;
     private Font textFont;
     private Font titleFont;
@@ -34,6 +33,7 @@ public class MainWindow extends JFrame implements ActionListener {
         super("Survey on Social Media");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(450, 350);
+        this.setLocation(400, 250);
         this.setResizable(false);
         this.recordNo = 1;
         this.previousRecords = new ArrayList<>();
@@ -54,6 +54,7 @@ public class MainWindow extends JFrame implements ActionListener {
         this.addLabel(labels, "Social Media");
         this.addLabel(labels, "Age Group");
         this.addLabel(labels, "Avg Time");
+        // prevent panel from expanding vertically
         labels.setMaximumSize(labels.getPreferredSize());
         contentPane.add(labels);
     }
@@ -82,10 +83,9 @@ public class MainWindow extends JFrame implements ActionListener {
         this.deleteButton = new JButton("Delete");
         this.createButton(this.deleteButton, buttons);
 
-        this.deleteAllButton = new JButton("Delete All");
-        this.createButton(this.deleteAllButton, buttons);
-
-        contentPane.add(buttons);
+        JButton deleteAllButton = new JButton("Delete All");
+        this.createButton(deleteAllButton, buttons);
+        this.contentPane.add(buttons);
     }
 
     private void createButton(JButton button, JPanel panel) {
@@ -118,6 +118,7 @@ public class MainWindow extends JFrame implements ActionListener {
         surveyWindow.setVisible(true);
         if (surveyWindow.isSubmitPressed()) {
             this.formattedData = surveyWindow.getDataEntered();
+            // save the window in case the modify button is pressed
             this.surveyData.addElement(this.formattedData);
             this.previousRecords.add(surveyWindow);
             this.recordNo++;
@@ -125,11 +126,8 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     private AddSurveyWindow getSelectedSurvey(String selectedSurvey) {
-        //System.out.println(selectedSurvey);
         for (AddSurveyWindow survey : this.previousRecords) {
-            //System.out.println("current " + survey.getDataEntered());
             if (survey.getDataEntered().equals(selectedSurvey)) {
-                //System.out.println(survey.getDataEntered());
                 return survey;
             }
         }
@@ -139,7 +137,6 @@ public class MainWindow extends JFrame implements ActionListener {
     private void modifyButtonClicked() {
         String selectedSurvey = this.dataList.getSelectedValue();
         AddSurveyWindow surveyWindow = this.getSelectedSurvey(selectedSurvey);
-        //System.out.println(surveyWindow);
         if (surveyWindow == null) {
             return;
         }
