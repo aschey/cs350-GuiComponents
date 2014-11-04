@@ -1,9 +1,18 @@
+/**
+ * CS 350
+ * Project 5
+ * Austin Schey
+ * CSample.java- a class to represent survey data
+ */
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import java.io.Serializable;
 
 
-public class CSample {
+public class CSample implements Serializable {
+
+    private static final long serialVersionUID = 5073498025308409272L;
     public String recordNo;
     public String zipCode;
     public String socialMedia;

@@ -1,3 +1,9 @@
+/**
+ * CS 350
+ * Project 5
+ * Austin Schey
+ * AddSurveyWindow.java- creates a JDialog to enter a survey
+ */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +23,8 @@ import javax.swing.border.EtchedBorder;
 
 
 public class AddSurveyWindow extends JDialog implements ActionListener {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -8310911763919556270L;
     private int recordNo;
     private boolean submitPressed;
     private JButton submit;
@@ -191,5 +198,7 @@ public class AddSurveyWindow extends JDialog implements ActionListener {
     public boolean isSubmitPressed() {
         return this.submitPressed;
     }
+
+    public int getRecordNo() { return this.recordNo; }
 }
 
